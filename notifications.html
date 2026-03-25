@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Supervybe - Notification Settings</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Notifications-specific styling */
+        .settings-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+        }
+        .settings-section-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--shadow-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Toggle Switches */
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--shadow-light);
+        }
+        .toggle-row:last-child {
+            border-bottom: none;
+        }
+        .toggle-label {
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .toggle-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+        
+        /* CSS Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Frequency Select */
+        .frequency-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--shadow-light);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+            margin-top: 10px;
+            appearance: none;
+        }
+
+        /* Premium Alerts */
+        .premium-alert {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+            border-left: 4px solid #ffd700;
+        }
+
+        /* Save Button */
+        .btn-save-settings {
+            width: 100%;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <main id="supervybe-main-content">
+        
+        <section class="feed-header">
+            <h2>🔔 Alerts & Notifications</h2>
+        </section>
+
+        <section class="settings-card">
+            <h3 class="settings-section-title">💬 Engagement Alerts</h3>
+            
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    Replies & Comments
+                    <span class="toggle-desc">When someone replies to your post.</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notify-replies" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    Mentions & Tags
+                    <span class="toggle-desc">When you are explicitly tagged in a group or post.</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notify-mentions" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    Group Updates
+                    <span class="toggle-desc">Major announcements from Hubs you joined.</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notify-groups">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    Reward Credits
+                    <span class="toggle-desc">Alerts when your 50% split points are deposited.</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notify-rewards" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <section class="settings-card">
+            <h3 class="settings-section-title">⏱️ Frequency Control</h3>
+            <p style="font-size: 0.85rem; opacity: 0.8;">Choose how often Supervybe sends you push notifications.</p>
+            <select class="frequency-select" id="notify-frequency">
+                <option value="instant">Instant (Real-time)</option>
+                <option value="daily">Daily Digest (Once a day)</option>
+                <option value="weekly">Weekly Summary</option>
+                <option value="none">Muted (App icon badges only)</option>
+            </select>
+        </section>
+
+        <section class="settings-card premium-alert">
+            <h3 class="settings-section-title">✨ Priority Alerts (Premium)</h3>
+            
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    Event Reminders
+                    <span class="toggle-desc">Calendar sync for scheduled group events.</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notify-events" disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    VIP Mentions
+                    <span class="toggle-desc">Override 'Mute' if an Admin or VIP mentions you.</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notify-vip" disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <button class="btn-save-settings" id="btn-save-prefs">Save Preferences</button>
+
+        <div class="admob-container" id="admob-window" style="display:none;">
+            <iframe src="ads.html" width="100%" height="60" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+    </main>
+
+    <script src="theme_engine.js"></script>
+    <script src="HeaderIntelligence.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="language_engine.js"></script>
+    <script src="performance_optimizer.js"></script>
+
+    <script src="notifications.js"></script>
+
+</body>
+</html>

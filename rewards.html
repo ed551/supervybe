@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Supervybe - Cash Rewards</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Boostiful Glassmorphism & Layout */
+        .reward-card {
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+        
+        /* Transparent Policy Card */
+        .transparent-policy-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(46, 204, 113, 0.15));
+            border-left: 4px solid #2ecc71;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .balance-display {
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: #2ecc71; /* Dollar Green */
+            margin: 15px 0;
+            text-shadow: 0 0 12px rgba(46, 204, 113, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .withdraw-input {
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .withdraw-input:focus {
+            border: 1px solid #2ecc71;
+        }
+
+        .btn-withdraw {
+            width: 100%;
+            background: #2ecc71;
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+        }
+        .btn-withdraw:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+    <main id="supervybe-main-content">
+        
+        <section class="feed-header">
+            <h2>Cash Rewards</h2>
+        </section>
+
+        <section class="transparent-policy-card" id="reward-policy-statement">
+            <h3 style="margin-bottom: 10px; font-size: 1.1rem;">Reward Distribution Policy</h3>
+            <p style="font-size: 0.9rem; line-height: 1.5; color: #e0e0e0;">
+                This platform is designed for market research and engagement. Cash rewards are generated from your active participation and ad interactions. No financial investment is required to participate.
+            </p>
+            <ul style="font-size: 0.85rem; margin-top: 12px; margin-left: 20px; color: #cccccc; line-height: 1.6;">
+                <li><strong>Currency:</strong> Withdrawals are processed exclusively in USD ($).</li>
+                <li><strong>Shared Revenue:</strong> Users receive 40% of the cash generated from their direct app activity. The remaining 60% covers platform maintenance.</li>
+                <li><strong>Exclusive Revenue:</strong> Platform revenues generated independently of user activity are 100% retained by the developer.</li>
+            </ul>
+        </section>
+
+        <section class="reward-card" id="withdrawal-module">
+            <h3 style="opacity: 0.8; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Available USD Balance</h3>
+            <div class="balance-display" id="user-usd-balance">$0.00</div>
+            
+            <input type="number" id="withdraw-amount" class="withdraw-input" placeholder="Amount to withdraw (USD)..." min="5" step="0.01">
+            <input type="email" id="withdraw-account" class="withdraw-input" placeholder="Receiving Account (PayPal/Payoneer)...">
+            
+            <button class="btn-withdraw" id="btn-process-withdrawal">
+                <span>Withdraw Funds</span>
+            </button>
+        </section>
+
+        <div class="admob-container" id="admob-window" style="display:none;">
+            <iframe src="ads.html" width="100%" height="60" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+    </main>
+
+    <script src="theme_engine.js"></script>
+    <script src="HeaderIntelligence.js"></script>
+    <script src="script.js"></script>
+
+    <script src="unified_participant_payout.js"></script>
+    <script src="equal_split_protocol.js"></script>
+
+    <script src="rewards.js"></script>
+
+</body>
+</html>

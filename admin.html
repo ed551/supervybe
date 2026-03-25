@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Supervybe - Admin Control Center</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* --- Admin Authentication Overlay --- */
+        #admin-auth-overlay {
+            position: fixed;
+            top: 60px; /* Below global header */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 120px); /* Above nav */
+            background: var(--bg-color);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .biometric-prompt {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: 0 0 20px rgba(102, 252, 241, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .biometric-prompt:active {
+            transform: scale(0.95);
+        }
+        .biometric-prompt img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px #66fcf1);
+        }
+
+        /* --- Admin Dashboard Layout --- */
+        #admin-dashboard {
+            display: none; /* Hidden until biometric pass */
+        }
+        
+        /* AI Pulse Indicator */
+        .ai-status-banner {
+            background: var(--card-bg);
+            border: 1px solid #9b59b6;
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5); /* Pulse Purple */
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: pulse-purple 2s infinite alternate;
+        }
+        @keyframes pulse-purple {
+            from { box-shadow: 0 0 5px rgba(155, 89, 182, 0.3); }
+            to { box-shadow: 0 0 20px rgba(155, 89, 182, 0.8); }
+        }
+        .ai-status-banner img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Control Grid */
+        .admin-controls-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .control-switch {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .control-switch:active {
+            transform: scale(0.95);
+        }
+        .control-switch img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+        .control-switch span {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Specific Glow Effects */
+        .switch-killer { border-color: #ff0000; box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+        .switch-killer span { color: #ff0000; } /* Neon Red */
+        
+        .switch-boot { border-color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
+        .switch-boot span { color: #00ff00; } /* Cyber Green */
+        
+        .switch-restart { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        .switch-restart span { color: #00e5ff; } /* Electric Blue */
+        
+        .switch-upgrade { border-color: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .switch-upgrade span { color: #ffd700; } /* Gold */
+        
+        .switch-problem { border-color: #00ffff; box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+        .switch-problem span { color: #00ffff; } /* Cyan */
+        
+        .switch-downgrade { border-color: #ffa500; box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); }
+        .switch-downgrade span { color: #ffa500; } /* Orange */
+        
+        .switch-creator { border-color: #50c878; box-shadow: 0 0 10px rgba(80, 200, 120, 0.5); }
+        .switch-creator span { color: #50c878; } /* Emerald */
+
+    </style>
+</head>
+<body>
+
+    <main id="supervybe-main-content">
+        
+        <section class="feed-header">
+            <h2>⚙️👤 System Admin</h2>
+        </section>
+
+        <div id="admin-auth-overlay">
+            <h2>Authentication Required</h2>
+            <p style="opacity: 0.7; margin-bottom: 20px; font-size: 0.9rem;">Scan fingerprint to access global controls.</p>
+            <div class="biometric-prompt" id="btn-fingerprint-scan">
+                <img src="asset/fingerprint_reader.png" alt="Fingerprint Scanner">
+            </div>
+            <p id="auth-status-msg" style="color: var(--accent-color); font-weight: bold;"></p>
+        </div>
+
+        <section id="admin-dashboard">
+            
+            <div class="ai-status-banner">
+                <img src="asset/health_check_AI_link.png" alt="AI Agent Work Sign">
+                <div>
+                    <strong>Master AI is active 🤖</strong>
+                    <div style="font-size: 0.8rem; opacity: 0.8;">Self-healing and diagnostics running seamlessly.</div>
+                </div>
+            </div>
+
+            <div class="admin-controls-grid">
+                
+                <div class="control-switch switch-killer" id="cmd-kill">
+                    <img src="asset/kill.png" alt="File Killer" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Global Shutdown</span>
+                </div>
+                
+                <div class="control-switch switch-boot" id="cmd-boot">
+                    <img src="asset/boot.png" alt="File Boot" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Cold Start</span>
+                </div>
+                
+                <div class="control-switch switch-restart" id="cmd-restart">
+                    <img src="asset/restart.png" alt="File Restart" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Refresh Cache</span>
+                </div>
+                
+                <div class="control-switch switch-upgrade" id="cmd-upgrade">
+                    <img src="asset/upgrade.png" alt="File Updater" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Pull Update (.sh)</span>
+                </div>
+                
+                <div class="control-switch switch-problem" id="cmd-problem-check">
+                    <img src="asset/problem-checker.png" alt="File Problem Checker" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Diagnostics</span>
+                </div>
+                
+                <div class="control-switch switch-downgrade" id="cmd-downgrade">
+                    <img src="asset/downgrade.png" alt="File Downgrade" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Revert Version</span>
+                </div>
+                
+                <div class="control-switch switch-creator" id="cmd-creator" style="grid-column: span 2;">
+                    <img src="asset/regenerate.png" alt="File Creator" onerror="this.src='asset/fingerprint_reader.png'">
+                    <span>Generate New Configs</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="admob-container" id="admob-window" style="display:none;">
+            <iframe src="ads.html" width="100%" height="60" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+    </main>
+
+    <script src="theme_engine.js"></script>
+    <script src="HeaderIntelligence.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="admin.js"></script>
+
+</body>
+</html>

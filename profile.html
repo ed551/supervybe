@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Supervybe - Profile</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Profile-specific styling */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            text-align: center;
+        }
+        .profile-avatar-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            border: 3px solid var(--text-color);
+            overflow: hidden;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .premium-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #ffd700;
+            color: #000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+        .profile-bio {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 10px 0;
+        }
+        
+        /* Stats Bar */
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--shadow-light);
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        /* Action Menus (Iconic) */
+        .profile-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .menu-btn {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px var(--shadow-light);
+            transition: transform 0.2s;
+        }
+        .menu-btn:hover {
+            transform: scale(1.02);
+        }
+        .menu-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        .menu-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        /* Auth Controls */
+        .auth-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-auth {
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px var(--shadow-light);
+        }
+        .btn-signin { background: var(--accent-color); color: #000; }
+        .btn-signout { background: transparent; border: 1px solid var(--text-color); color: var(--text-color); }
+        .btn-delete { background: #ff4757; color: #fff; width: 100%; margin-top: 10px; }
+
+    </style>
+</head>
+<body>
+
+    <main id="supervybe-main-content">
+        
+        <section class="feed-header">
+            <h2>👤 Identity Hub</h2>
+        </section>
+
+        <section class="profile-header" id="user-identity-display">
+            <div class="profile-avatar-container">
+                <div class="profile-avatar" id="avatar-display">👤</div>
+                <div class="premium-badge" id="btn-upgrade-premium" title="Upgrade Profile">✨</div>
+            </div>
+            
+            <h3 id="display-name">Guest User</h3>
+            <p class="profile-bio" id="display-bio">Welcome to Supervybe. Sign in to boost your identity.</p>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-posts">0</span>
+                    <span class="stat-label">➕</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-groups">0</span>
+                    <span class="stat-label">👥</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-rewards">0</span>
+                    <span class="stat-label">💎</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="profile-menu">
+            <button class="menu-btn" id="btn-view-history">
+                <div class="menu-content"><span class="menu-icon">📜</span> Activity History</div>
+                <span>▶</span>
+            </button>
+            
+            <button class="menu-btn" id="btn-account-settings">
+                <div class="menu-content"><span class="menu-icon">⚙️</span> Account Settings</div>
+                <span>▶</span>
+            </button>
+            
+            <button class="menu-btn" id="btn-privacy-settings">
+                <div class="menu-content"><span class="menu-icon">🔒</span> Privacy Preferences</div>
+                <span>▶</span>
+            </button>
+        </section>
+
+        <section class="auth-controls" id="auth-panel">
+            <button class="btn-auth btn-signin" id="btn-signin">Sign In / Sign Up</button>
+            <button class="btn-auth btn-signout hidden" id="btn-signout">Sign Out</button>
+            <button class="btn-auth btn-delete hidden" id="btn-delete-account">Delete Account</button>
+        </section>
+
+        <div class="admob-container" id="admob-window" style="display:none;">
+            <iframe src="ads.html" width="100%" height="60" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+    </main>
+
+    <script src="theme_engine.js"></script>
+    <script src="HeaderIntelligence.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="auth_logic.js"></script>
+    <script src="user_history.js"></script>
+    <script src="wallet_engine.js"></script>
+
+    <script src="profile.js"></script>
+
+</body>
+</html>

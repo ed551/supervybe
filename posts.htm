@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Supervybe - Posts</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Post-specific styling (can be moved to style.css later) */
+        .post-creator {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+        }
+        .post-creator input, .post-creator textarea {
+            width: 100%;
+            background: var(--bg-color);
+            border: 1px solid var(--shadow-light);
+            color: var(--text-color);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+        .creator-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .action-icons span {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .btn-submit {
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .post-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .post-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .avatar {
+            font-size: 2rem;
+        }
+        .btn-report {
+            background: none;
+            border: none;
+            color: #ff4757;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .post-content-area {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .post-media {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            color: #fff;
+        }
+        .post-poll {
+            background: var(--bg-color);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .poll-option {
+            background: var(--card-bg);
+            border: 1px solid var(--shadow-light);
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .interaction-bar {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid var(--shadow-light);
+            padding-top: 10px;
+        }
+        .interaction-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <main id="supervybe-main-content">
+        
+        <section class="feed-header">
+            <h2>➕ Community Feed</h2>
+        </section>
+
+        <section class="post-creator" id="post-creation-station">
+            <input type="text" id="post-title" placeholder="Title your post...">
+            <textarea id="post-body" rows="3" placeholder="Share updates, videos, or announcements..."></textarea>
+            <div class="creator-actions">
+                <div class="action-icons">
+                    <span title="Add Image/GIF">🖼️</span>
+                    <span title="Add Realtime Video">🎥</span>
+                    <span title="Create Poll">📊</span>
+                    <span title="Add Animation">✨</span>
+                </div>
+                <button class="btn-submit" id="submit-post-btn">Post</button>
+            </div>
+        </section>
+
+        <section id="posts-feed-container">
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-user-info">
+                        <span class="avatar">🤖</span>
+                        <div>
+                            <strong>Master AI</strong>
+                            <div style="font-size: 0.75rem; opacity: 0.7;">Announcement • Just Now</div>
+                        </div>
+                    </div>
+                    <button class="btn-report" title="Report Post">🚩</button>
+                </div>
+                <div class="post-content-area">
+                    <strong>System Update:</strong> Realtime video processing is now active! Drop your thoughts below.
+                    <div class="post-media">
+                        [▶️ Realtime Video Stream Placeholder]
+                    </div>
+                </div>
+                <div class="interaction-bar">
+                    <button class="interaction-btn">👍 <span>120</span></button>
+                    <button class="interaction-btn">💬 <span>14</span></button>
+                    <button class="interaction-btn">🔁</button>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="post-user-info">
+                        <span class="avatar">👤</span>
+                        <div>
+                            <strong>Edwin</strong>
+                            <div style="font-size: 0.75rem; opacity: 0.7;">Poll • 2 hrs ago</div>
+                        </div>
+                    </div>
+                    <button class="btn-report" title="Report Post">🚩</button>
+                </div>
+                <div class="post-content-area">
+                    <strong>Which feature should we upgrade next?</strong>
+                    <div class="post-poll">
+                        <div class="poll-option">1️⃣ Advanced Gold Intel Logic</div>
+                        <div class="poll-option">2️⃣ Faster Health Diagnostic AI</div>
+                        <div class="poll-option">3️⃣ More Boostiful UI Themes</div>
+                    </div>
+                </div>
+                <div class="interaction-bar">
+                    <button class="interaction-btn">👍 <span>45</span></button>
+                    <button class="interaction-btn">💬 <span>8</span></button>
+                </div>
+            </div>
+
+            </section>
+
+        <div class="admob-container" id="admob-window" style="display:none;">
+            <iframe src="ads.html" width="100%" height="60" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+    </main>
+
+    <script src="theme_engine.js"></script>
+    <script src="HeaderIntelligence.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="intelligent_dispatcher.js"></script>
+    <script src="security_audit.js"></script>
+
+    <script src="posts.js"></script>
+
+</body>
+</html>
